@@ -1,0 +1,112 @@
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+D:\code\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard.exe.config
+D:\code\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard\bin\Debug\Npgsql.dll
+D:\code\DisplayBoard\DisplayBoard\bin\Debug\Mono.Security.dll
+D:\code\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard.exe.config
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\Mono.Security.dll
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\Parameter\Display.xml
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+D:\test\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+D:\test\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+D:\test\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+D:\test\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+D:\test\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Npgsql.dll
+D:\test\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.exe
+D:\test\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.pdb
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.exe
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (5)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.exe
+D:\code\DisplayBoard\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.pdb
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.exe
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.pdb
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display - 复制.xml
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.exe
+C:\Users\yyx19\Desktop\临时回收站\新建文件夹 (3)_最后\DisplayBoard-master\DisplayBoard\obj\Debug\DisplayBoard.pdb
+D:\GIT\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+D:\GIT\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+D:\GIT\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+D:\GIT\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+D:\GIT\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Npgsql.dll
+D:\GIT\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csprojAssemblyReference.cache
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.cache
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs.cache
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.exe
+D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.pdb
