@@ -122,3 +122,5 @@ D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\Displ
 D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
 D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.Cache
 D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Newtonsoft.Json.dll
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\log4net.dll
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\log4net.xml

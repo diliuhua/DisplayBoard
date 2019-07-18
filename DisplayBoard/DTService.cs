@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Xml.Linq;
 using System.Windows.Forms;
+using DisplayBoard.Util;
 
 namespace DisplayBoard
 {
@@ -136,25 +137,35 @@ namespace DisplayBoard
         private List<DtData> GetDtData(string DBline, List<DateTime> rangeDate, string assy)
         {
             List<DtData> dtDataRet = new List<DtData>();
-            XDocument XMLdoc = XDocument.Load(Application.StartupPath + @"\Parameter\Display.xml");
-            string url = XMLdoc.Descendants("url").FirstOrDefault().Value;
-            string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
-            string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss");
-            SummaryDataModel summaryDataModel = new SummaryDataModel()
+            try
             {
-                line_cd = DBline,
-                assy_cd = assy,
-                start = start_time,
-                end = end_time
-            };
-
-            string summaryDataModelStr = SerializeObject<SummaryDataModel>(summaryDataModel);
-            string res = PostHttp(url, summaryDataModelStr);
-            ResObjModel<List<DtData>> resObj = DeserializeJsonToObject<ResObjModel<List<DtData>>>(res);
-            foreach (DtData item in resObj.data) {
-                dtDataRet.Add(new DtData { start = item.start, end = item.end });
+                XDocument XMLdoc = XDocument.Load(Application.StartupPath + @"\Parameter\Display.xml");
+                string url = XMLdoc.Descendants("url").FirstOrDefault().Value;
+                string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
+                string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss"); 
+                SummaryDataModel summaryDataModel = new SummaryDataModel()
+                {
+                    line_cd = DBline,
+                    assy_cd = assy,
+                    start = start_time,
+                    end = end_time
+                };
+                string summaryDataModelStr = SerializeObject<SummaryDataModel>(summaryDataModel);
+                string res = PostHttp(url, summaryDataModelStr);
+                ResObjModel<List<DtData>> resObj = DeserializeJsonToObject<ResObjModel<List<DtData>>>(res);
+                foreach (DtData item in resObj.data)
+                {
+                    dtDataRet.Add(new DtData { start = item.start, end = item.end });
+                }
+                return dtDataRet;
             }
-            return dtDataRet;
+            catch(Exception ex)
+            {
+                string str = LogHelper.GetExceptionMsg(ex, "獲取API數據失敗！");
+                LogHelper.WriteErrorLog(str);
+                return dtDataRet;
+            }
+            
         }
 
         /// <summary>
@@ -297,7 +308,6 @@ namespace DisplayBoard
             {
                 DateTime startDT = dtData.start;
                 DateTime endDT = dtData.end;
-                Console.WriteLine(startDT.ToString(), endDT.ToString());
                 int startIndex = -1;
                 int endIndex = -1;
 
