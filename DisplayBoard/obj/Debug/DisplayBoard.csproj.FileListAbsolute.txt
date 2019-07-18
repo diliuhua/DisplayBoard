@@ -110,3 +110,15 @@ D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CoreCompileInputs
 D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.CopyComplete
 D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.exe
 D:\GIT\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.pdb
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe.config
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.exe
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.pdb
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Parameter\Display.xml
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.exe
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\DisplayBoard.pdb
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Mono.Security.dll
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csprojResolveAssemblyReference.cache
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.DisplayBoard.resources
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.Properties.Resources.resources
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\obj\Debug\DisplayBoard.csproj.GenerateResource.Cache
+D:\MyProject\10_DisplayBoard\02_Source\DisplayBoard\DisplayBoard\bin\Debug\DisplayBoard\Newtonsoft.Json.dll

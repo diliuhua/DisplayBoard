@@ -1,10 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <display>
   <database>
-    <DB1>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_aoi_kk09;</DB1>
-    <DB2>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_tst_kk09;</DB2>
+    <!--<DB1>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_aoi_kk09;</DB1>-->
+    <!--<DB2>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_tst_kk09;</DB2>-->
+
+
+    <!--TPC：修改数据库连接-->
+    <!--<DB1>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_aoi_kk08;</DB1>-->
+    <DB1>Server=10.107.171.101;Port=5432;User id=postgres;password=postgres;Database=pqm_aoi_kk07;</DB1>
+    <!--END-TPC：修改数据库连接-->
+    <DB2>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_tst_kk08;</DB2>
+
   </database>
   <flash>600</flash>
+  <!--TPC：add url link-->
+  <url>http://10.107.171.57:8000/get_status_data_api</url>
+  <!--TPC：add url link-->
   <form font="Arial black" backColor="#4169E1"></form>
   <!--标题-->
   <title size="20" foreColor="#FFFFFF" location="400,10">Production Efficiency Kanban</title>
@@ -73,9 +84,40 @@
       <Final input="AE-15" output="AE-15" process="F-COSM">5,1200,3.06%,2.00%,0.00%,95.00%,99.5%</Final>
       <OK2SHIP input="OK2SHIP" output="OK2SHIP" process="">1,4800,0%,0%,0%,0%,0%</OK2SHIP>
     </kk08>
+    <!--TPC：追加KKO7-->
+    <kk07>
+      <Cover_Shield input="AE-16_35CS" output="AE-44" process="AE-43,CS-COSM">3,2687,1.46%,0.00%,1.00%,92.00%,99.2%</Cover_Shield>
+      <External_Flex_Attach input="AE-1" output="AE-1" process="">1,1272,0%,0%,0%,0%,0%</External_Flex_Attach>
+      <Cover_Assy input="AE-1" output="CNTRS" process="AE-83,AE-16_01CJ,AE-3,AE-2,AE-40,C-COSM">10,1272,3.86%,0.47%,2.00%,92.00%,99.5%</Cover_Assy>
+      <Base_Shield input="AE-16_36BS" output="AE-46" process="AE-45,B-COSM">3,2647,1.46%,0.00%,1.00%,92.00%,99.2%</Base_Shield>
+      <Internal_Flex_Attach input="AE-4" output="AE-4" process="">1,1259,0%,0%,0%,0%,0%</Internal_Flex_Attach>
+      <Base_Assey input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assey>
+      <Magnet-Plate input="AE-30" output="AE-30" process="CA1-COSM">3,2687,6.96%,0.37%,0.75%,92.00%,99.0%</Magnet-Plate>
+      <Magnet_Insert input="AE-16_19MA" output="AE-32" process="CA2-COSM,GNTRS,GOVEN">6,1314,4.84%,0.05%,0.00%,92.00%,99.0%</Magnet_Insert>
+      <Inner_Mount input="AE-16_20JM" output="GOVEN2" process="AE-33,AE-49,CA3-COSM,GNTRS2">9,1314,6.84%,0.56%,0.00%,92.00%,99.0%</Inner_Mount>
+      <L-Frame input="AE-60" output="AE-61" process="LF-COSM">3,1324,7.37%,0.68%,0.00%,92.00%,99.2%</L-Frame>
+      <L-Bumper input="AE-65" output="AE-65" process="">1,2517,5.10%,0.00%,0.48%,92.00%,99.9%</L-Bumper>
+      <Tub_Welding input="AE-16_06HC" output="AE-64" process="AE-63,TU-COSM">2.5,1259,7.22%,0.84%,0.00%,92.00%,99.3%</Tub_Welding>
+      <Cage_Bumper input="AE-49" output="AE-49" process="">1,2553,0%,0%,0%,0%,0%</Cage_Bumper>
+      <CLD_Attach input="AE-47" output="AE-16_47CD" process="">3,1338,5.13%,0.00%,1.32%,92.00%,99.5%</CLD_Attach>
+      <Inner_Welding input="AE-16_03IN" output="AE-7" process="CLD-COSM,AE-16_13IN,I-COSM">4,1333,7.62%,0.00%,0.41%,92.00%,99.6%</Inner_Welding>
+      <Inner_Flexure_Glue input="AE-16_32IG" output="INTRS" process="AE-68-1,AE-16_34IG,AE-68-2,AE-39,IG-COSM">3,1333,7.10%,0.28%,0.00%,92.00%,99.8%</Inner_Flexure_Glue>
+      <Docking input="AE-16_05AP" output="AE-16_05AP" process="SS-COSM">0.5,1259,8.00%,0.00%,0.00%,92.00%,99.6%</Docking>
+      <SoftStop input="AE-9" output="AE-9" process="D-COSM">3,1259,4.09%,0.81%,0.72%,92.00%,99.9%</SoftStop>
+      <Base_Welding input="AE-16_08MH" output="AE-10" process="AE-16_04HB,BW-COSM">5,1250,6.10%,1.00%,0.00%,92.00%,99.0%</Base_Welding>
+      <Tab_East_West_welding input="AE-16_07JT" output="AE-14" process="TA-COSM">5,1246,5.22%,2.00%,0.96%,92.00%,99.3%</Tab_East_West_welding>
+      <Hotbar_Insulation_Tape input="AE-16_12PE" output="AE-16_33IT" process="AE-16_09MB,AE-42,H-COSM">12,1246,2.83%,1.00%,2.00%,92.00%,99.5%</Hotbar_Insulation_Tape>
+      <Tab_South_Welding input="AE-67" output="AE-67" process="ST-COSM">5,1246,5.28%,2.00%,0.89%,92.00%,99.5%</Tab_South_Welding>
+      <Pre-bend_Label input="AE-16_16PB" output="HNTRS" process="ST-COSM,AE-16_17BL,EA-COSM">7,1246,1.00%,0.00%,2.00%,92.00%,99.5%</Pre-bend_Label>
+      <VMT input="VMT" output="VMT" process="VM-COSM">2,1200,4.52%,0.50%,0.00%,95.00%,99.8%</VMT>
+      <TRAP4 input="TRAP1" output="TRAP1" process="TR-COSM">6,1200,1.04%,4.00%,0.00%,95.00%,99.6%</TRAP4>
+      <Final input="AE-15" output="AE-15" process="F-COSM">5,1200,3.06%,2.00%,0.00%,95.00%,99.5%</Final>
+      <OK2SHIP input="OK2SHIP" output="OK2SHIP" process="">1,4800,0%,0%,0%,0%,0%</OK2SHIP>
+    </kk07>
+    <!--ENDTPC：追加KKO7-->
   </dgvTarget>
   <!--班次-->
-  <dayShif>    
+  <dayShif>
     <timeSpan1>8:00,9:00</timeSpan1>
     <timeSpan2>9:00,10:00</timeSpan2>
     <timeSpan3>10:00,11:00</timeSpan3>

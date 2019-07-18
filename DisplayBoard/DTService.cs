@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace DisplayBoard
 {
@@ -19,18 +24,17 @@ namespace DisplayBoard
         /// <param name="dayOrNight"></param>
         /// <param name="nowShifList"></param>
         /// <returns></returns>
-        public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList)
+        public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList, string assy)
         {
             List<DateTime[]> timeSpan = ConvertTimeSpan(dayOrNight, nowShifList); // 获取格式化后的DateTime
             if (timeSpan.Count == 0) return null;
-
+            //string a = cboInline.Text;
             List<DateTime> rangeDate = GetRangeDate(dayOrNight, nowShifList); // 查询班次的范围
-            DataTable dt = QueryDT(inputName, outputName, process_cd, DBline, rangeDate); // 获取数据
-            Dictionary<string, List<DtData>> dictProcDt = GetDtDataByProc(dt); // 获取分组的Proc的DT
-            
-            List<DtData> dtDataList = GetDtDataAll(dictProcDt, timeSpan); // 对重复时间进行整合后的DT
+            //DataTable dt = QueryDT(inputName, outputName, process_cd, DBline, rangeDate, assy); // 获取数据
+            //Dictionary<string, List<DtData>> dictProcDt = GetDtDataByProc(dt); // 获取分组的Proc的DT
+            //List<DtData> dtDataList = GetDtDataAll(dictProcDt, timeSpan); // 对重复时间进行整合后的DT
+            List<DtData> dtDataList = GetDtData(DBline, rangeDate, assy);
             List<double[]> dtData = ComputeDT(dtDataList, timeSpan); // 计算
-
             return dtData;
         }
 
@@ -44,42 +48,232 @@ namespace DisplayBoard
         /// <param name="dayOrNight"></param>
         /// <param name="nowShifList"></param>
         /// <returns></returns>
-        private DataTable QueryDT(string inputName, string outputName, string[] process_cd, string DBline, List<DateTime> rangeDate)
+        //private DataTable QueryDT(string inputName, string outputName, string[] process_cd, string DBline, List<DateTime> rangeDate)
+        //{
+        //    string process_cd_in = string.Format("'{0}', '{1}', '{2}'", inputName, outputName, String.Join("','", process_cd));
+
+        //    // 查询数据
+        //    //测试用
+        //    string sql = string.Format(@"
+        //        SELECT AA.proc_uuid, process_at, judge_text, 
+        //      ROW_NUMBER() OVER (PARTITION BY AA.proc_uuid ORDER BY process_at) AS rid
+        //        FROM(		 
+        //         SELECT proc_uuid,process_cd
+        //         FROM m_process
+        //         WHERE process_cd in('AE-1') 
+        //         AND line_cd='L03'
+        //        )PP
+        //        LEFT JOIN t_insp_kk07 AA ON AA.proc_uuid = pp.proc_uuid
+        //        WHERE process_at >= '2018-06-30 20:00' and  process_at < '2018-07-01 05:00' 
+        //    ");
+
+        //    //string sql = string.Format(@"
+        //    //    SELECT AA.proc_uuid, process_at, judge_text, 
+        //    //  ROW_NUMBER() OVER (PARTITION BY AA.proc_uuid ORDER BY process_at) AS rid
+        //    //    FROM(		 
+        //    //     SELECT proc_uuid,process_cd
+        //    //     FROM m_process
+        //    //     WHERE process_cd in({0}) 
+        //    //     AND line_cd='{1}' 
+        //    //    )PP
+        //    //    LEFT JOIN t_insp_{2} AA ON AA.proc_uuid = pp.proc_uuid
+        //    //    WHERE process_at >= '{3}' and  process_at < '{4}' 
+        //    //", process_cd_in, DBline, DBHelper.DBremark, rangeDate[0].ToString("yyyy-MM-dd HH:mm"), rangeDate[1].ToString("yyyy-MM-dd HH:mm"));
+
+        //    DataTable dt = new DataTable();
+        //    Console.WriteLine(sql);
+        //    new DBHelper().ExecuteDataTable(1, sql, ref dt);
+        //    return dt;
+        //}
+
+        private DataTable QueryDT(string inputName, string outputName, string[] process_cd, string DBline, List<DateTime> rangeDate, string assy)
         {
-            string process_cd_in = string.Format("'{0}', '{1}', '{2}'", inputName, outputName, String.Join("','", process_cd));
+            //string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
+            //string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss");
 
-            // 查询数据
-            //测试用
-            //string sql = string.Format(@"
-            //    SELECT AA.proc_uuid, process_at, judge_text, 
-            //  ROW_NUMBER() OVER (PARTITION BY AA.proc_uuid ORDER BY process_at) AS rid
-            //    FROM(		 
-            //     SELECT proc_uuid,process_cd
-            //     FROM m_process
-            //     WHERE process_cd in('AE-1') 
-            //     AND line_cd='L03' -- 
-            //    )PP
-            //    LEFT JOIN t_insp_kk07 AA ON AA.proc_uuid = pp.proc_uuid
-            //    WHERE process_at >= '2018-06-30 20:00' and  process_at < '2018-07-01 05:00' 
-            //", process_cd_in, DBline, rangeDate[0].ToString("yyyy-MM-dd HH:mm"), rangeDate[1].ToString("yyyy-MM-dd HH:mm"));
+            string start_time = "2018-07-10 17:00:00";
+            string end_time = "2019-07-17 17:00:00";
+            assy = "TUB";
+            SummaryDataModel summaryDataModel = new SummaryDataModel()
+            {
+                line_cd = DBline,
+                assy_cd = assy,
+                start = start_time,
+                end = end_time
+            };
 
-            string sql = string.Format(@"
-                SELECT AA.proc_uuid, process_at, judge_text, 
-              ROW_NUMBER() OVER (PARTITION BY AA.proc_uuid ORDER BY process_at) AS rid
-                FROM(		 
-                 SELECT proc_uuid,process_cd
-                 FROM m_process
-                 WHERE process_cd in({0}) 
-                 AND line_cd='{1}' 
-                )PP
-                LEFT JOIN t_insp_{2} AA ON AA.proc_uuid = pp.proc_uuid
-                WHERE process_at >= '{3}' and  process_at < '{4}' 
-            ", process_cd_in, DBline, DBHelper.DBremark, rangeDate[0].ToString("yyyy-MM-dd HH:mm"), rangeDate[1].ToString("yyyy-MM-dd HH:mm"));
-
+            string summaryDataModelStr = SerializeObject<SummaryDataModel>(summaryDataModel);
+            string url = "http://10.107.171.57:8000/get_status_data_api";
+            string res = PostHttp(url, summaryDataModelStr);
+            ResObjModel<List<SummaryDataModel>> resObj = DeserializeJsonToObject<ResObjModel<List<SummaryDataModel>>>(res);
             DataTable dt = new DataTable();
-            new DBHelper().ExecuteDataTable(1, sql, ref dt);
+            if (resObj.state)
+            {
+                dt.Columns.Add("proc_uuid");
+                dt.Columns.Add("process_at");
+                dt.Columns.Add("judge_text");
+                dt.Columns.Add("rid");
+                foreach (SummaryDataModel item in resObj.data) {
+                    DataRow dr = dt.NewRow();
+                    dr["line_cd"] = item.line_cd.ToString();
+                    dr["assy_cd"] = item.assy_cd.ToString();
+                    dr["start"] = item.start.ToString();
+                    dr["end"] = item.end.ToString();
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+            }
             return dt;
         }
+
+        /// <summary>
+        /// Get start-end time list
+        /// </summary>
+        /// <param name="DBline"></param>
+        /// <param name="rangeDate"></param>
+        /// <param name="assy"></param>
+        /// <returns></returns>
+        private List<DtData> GetDtData(string DBline, List<DateTime> rangeDate, string assy)
+        {
+            List<DtData> dtDataRet = new List<DtData>();
+            XDocument XMLdoc = XDocument.Load(Application.StartupPath + @"\Parameter\Display.xml");
+            string url = XMLdoc.Descendants("url").FirstOrDefault().Value;
+            string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
+            string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss");
+            SummaryDataModel summaryDataModel = new SummaryDataModel()
+            {
+                line_cd = DBline,
+                assy_cd = assy,
+                start = start_time,
+                end = end_time
+            };
+
+            string summaryDataModelStr = SerializeObject<SummaryDataModel>(summaryDataModel);
+            string res = PostHttp(url, summaryDataModelStr);
+            ResObjModel<List<DtData>> resObj = DeserializeJsonToObject<ResObjModel<List<DtData>>>(res);
+            foreach (DtData item in resObj.data) {
+                dtDataRet.Add(new DtData { start = item.start, end = item.end });
+            }
+            return dtDataRet;
+        }
+
+        /// <summary>
+        /// 将对象序列化为JSON格式
+        /// </summary>
+        /// <param name="o">对象</param>
+        /// <returns>json字符串</returns>
+        public static string SerializeObject<T>(T t)
+        {
+            string json = JsonConvert.SerializeObject(t);
+            return json;
+        }
+
+        /// <summary>
+        ///  HttpWebRequest模拟GET请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string GetHttp(string url)
+        {
+            HttpWebRequest httpWebRequest = null;
+            HttpWebResponse httpWebResponse = null;
+            StreamReader streamReader = null;
+            string responseContent = "";
+
+            try
+            {
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "text/html;charset=UTF-8";
+                httpWebRequest.Method = "GET";
+                httpWebRequest.Timeout = 10 * 1000;
+
+                httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                streamReader = new StreamReader(httpWebResponse.GetResponseStream());
+                responseContent = streamReader.ReadToEnd();
+                return responseContent;
+            }
+            finally
+            {
+                if (httpWebRequest != null) httpWebRequest.Abort();
+                if (httpWebResponse != null) httpWebResponse.Close();
+                if (streamReader != null) streamReader.Close();
+            }
+        }
+
+        /// <summary>
+        /// HttpWebRequest模拟POST请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="body"></param>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        public static string PostHttp(string url, string body, string contentType = "application/json")
+        {
+            byte[] btBodys = Encoding.UTF8.GetBytes(body);
+
+            HttpWebRequest httpWebRequest = null;
+            HttpWebResponse httpWebResponse = null;
+            Stream reqStream = null;
+            StreamReader streamReader = null;
+            string responseContent = "";
+
+            try
+            {
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = contentType;
+                httpWebRequest.Method = "POST";
+                httpWebRequest.Timeout = 30 * 1000;
+                //httpWebRequest.ContentLength = btBodys.Length;
+
+                reqStream = httpWebRequest.GetRequestStream();
+                reqStream.Write(btBodys, 0, btBodys.Length);
+
+                httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                streamReader = new StreamReader(httpWebResponse.GetResponseStream());
+                responseContent = streamReader.ReadToEnd();
+
+                return responseContent;
+            }
+            finally
+            {
+                if (httpWebRequest != null) httpWebRequest.Abort();
+                if (httpWebResponse != null) httpWebResponse.Close();
+                if (reqStream != null) reqStream.Close();
+                if (streamReader != null) streamReader.Close();
+            }
+        }
+
+
+        // <summary>
+        /// 解析JSON字符串生成对象实体
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="json">json字符串(eg.{"ID":"112","Name":"石子儿"})</param>
+        /// <returns>对象实体</returns>
+        public static T DeserializeJsonToObject<T>(string json) where T : class
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            StringReader sr = new StringReader(json);
+            object o = serializer.Deserialize(new JsonTextReader(sr), typeof(T));
+            T t = o as T;
+            return t;
+        }
+
+        public class ResObjModel<T>
+        {
+            public bool state { get; set; }
+            public string msg { get; set; }
+            public T data { get; set; }
+        }
+
+        public class SummaryDataModel
+        {
+            public string line_cd { get; set; }
+            public string assy_cd { get; set; }
+            public string start { get; set; }
+            public string end { get; set; }
+        }
+
 
         /// <summary>
         /// 计算对应班次的DT
@@ -299,7 +493,6 @@ namespace DisplayBoard
                 // 最后一组数据需要处理添加
                 dtDataRet.Add(new DtData { start = startTmp, end = endTmp });
             }
-
             return dtDataRet;
         }
 

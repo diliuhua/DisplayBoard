@@ -275,7 +275,8 @@ namespace DisplayBoard
             //表格异常数据上色
             paint();
             // TPC: 调用DT方法
-            writeDT();
+            string assy = cboInline.Text;
+            writeDT(assy);
             // ENDTPC: 调用方法
         }
 
@@ -771,14 +772,14 @@ namespace DisplayBoard
         /// <summary>
         /// 写入DT数据
         /// </summary>
-        void writeDT()
+        void writeDT(string assy)
         {
             try
             {
                 // 测试夜班
                 //List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, false, nightShif);
 
-                List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, dayOrNight, nowShifList);
+                List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, dayOrNight, nowShifList, assy);
 
                 if (dtData == null)
                 {

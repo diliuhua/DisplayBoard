@@ -38,7 +38,12 @@ namespace DisplayBoard
                 {
                     return "kk07";
                 }
-                return "";
+                //return "";
+                // TPC：修改返回值
+                //return "";
+                return "kk07";
+                // ENDTPC：修改返回值
+
             }
         }
 
@@ -78,6 +83,7 @@ namespace DisplayBoard
                 try
                 {
                     NpgsqlDataAdapter da = new NpgsqlDataAdapter(sql, con);
+                    Console.WriteLine(sql);
                     da.Fill(dt);
                 }
                 catch (Exception ex)
