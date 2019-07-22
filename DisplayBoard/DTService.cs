@@ -92,7 +92,7 @@ namespace DisplayBoard
             //string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
             //string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss");
 
-            string start_time = "2018-07-10 17:00:00";
+            string start_time = "http://10.107.171.57:8000";
             string end_time = "2019-07-17 17:00:00";
             assy = "TUB";
             SummaryDataModel summaryDataModel = new SummaryDataModel()
@@ -143,6 +143,14 @@ namespace DisplayBoard
                 string url = XMLdoc.Descendants("url").FirstOrDefault().Value;
                 string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
                 string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss"); 
+
+                //// 测试用start
+                //string start_time = "2019-07-19 08:00:00";
+                //string end_time = "2019-07-19 15:00:00";
+                //DBline = "L03";
+                //assy = "Final";
+
+
                 SummaryDataModel summaryDataModel = new SummaryDataModel()
                 {
                     line_cd = DBline,
@@ -338,6 +346,9 @@ namespace DisplayBoard
                     }
                 }
 
+                if (endIndex == -1) {
+                    endIndex = countTS - 1;
+                }
 
                 // 3. 计算dt发生时间所对应的班次 
                 if (endIndex > -1 && startIndex > -1)
@@ -373,7 +384,14 @@ namespace DisplayBoard
 
                         // DT结束的班次时间计算
                         // DT结束时间 - DT结束时间所在班次的开始时间
-                        dtMinList[endIndex] += (endDT - endTS[0]).TotalSeconds;
+                        if (endIndex == countTS - 1)
+                        {
+                            dtMinList[endIndex] += (endTS[1] - endTS[0]).TotalSeconds;
+                        }
+                        else {
+                            dtMinList[endIndex] += (endDT - endTS[0]).TotalSeconds;
+                        }
+                        
 
                         // 跨班次段的计算, 从DT开始的班次的以下个班次到 结束的上一个班次
                         for (int i = startIndex + 1; i < endIndex; i++)
@@ -516,6 +534,10 @@ namespace DisplayBoard
         {
             int length = nowShifList.Count;
             DateTime now = DateTime.Now;
+
+            //// 测试用start
+            //DateTime now = DateTime.Parse("2019-07-19 16:43:21");
+
             List<DateTime[]> timeSpan = new List<DateTime[]>();
 
             if (dayOrNight)
@@ -525,6 +547,10 @@ namespace DisplayBoard
                     string[] times = nowShifList[i].Split(',');
                     DateTime start = Convert.ToDateTime(times[0]);
                     DateTime end = Convert.ToDateTime(times[1]);
+
+                    //// 测试用start
+                    //DateTime start = DateTime.Parse("2019-07-19 " + times[0].ToString());
+                    //DateTime end = DateTime.Parse("2019-07-19 " + times[1].ToString());
 
                     // 班次时间还没有到的时候
                     if (start >= now) break;
