@@ -171,7 +171,7 @@ namespace DisplayBoard
             if (start <= dtpNow && dtpNow < end)
             { dayOrNight = true; }
             else
-            { dayOrNight = false; }                
+            { dayOrNight = false; }
         }
 
         private void DisplayBoard_Load(object sender, EventArgs e)

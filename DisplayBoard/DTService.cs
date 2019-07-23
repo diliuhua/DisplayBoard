@@ -27,7 +27,7 @@ namespace DisplayBoard
         /// <returns></returns>
         public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList, string assy)
         {
-            List<DateTime[]> timeSpan = ConvertTimeSpan(dayOrNight, nowShifList); // 获取格式化后的DateTime
+            List<DateTime[]> timeSpan = ConvertTimeSpan(dayOrNight, nowShifList); // 获取格式化后的DateTime  
             if (timeSpan.Count == 0) return null;
             //string a = cboInline.Text;
             List<DateTime> rangeDate = GetRangeDate(dayOrNight, nowShifList); // 查询班次的范围
@@ -146,7 +146,7 @@ namespace DisplayBoard
 
                 //// 测试用start
                 //string start_time = "2019-07-19 08:00:00";
-                //string end_time = "2019-07-19 15:00:00";
+                //string end_time = "2019-07-19 16:00:00";
                 //DBline = "L03";
                 //assy = "Final";
 
@@ -346,9 +346,9 @@ namespace DisplayBoard
                     }
                 }
 
-                if (endIndex == -1) {
-                    endIndex = countTS - 1;
-                }
+                //if (endIndex == -1) {
+                //    endIndex = countTS - 1;
+                //}
 
                 // 3. 计算dt发生时间所对应的班次 
                 if (endIndex > -1 && startIndex > -1)
@@ -384,20 +384,31 @@ namespace DisplayBoard
 
                         // DT结束的班次时间计算
                         // DT结束时间 - DT结束时间所在班次的开始时间
-                        if (endIndex == countTS - 1)
-                        {
-                            dtMinList[endIndex] += (endTS[1] - endTS[0]).TotalSeconds;
-                        }
-                        else {
+                        //if (endIndex == countTS - 1)
+                        //{
+                        //    dtMinList[endIndex] += (endTS[1] - endTS[0]).TotalSeconds;
+                        //}
+                        //else
+                        //{
                             dtMinList[endIndex] += (endDT - endTS[0]).TotalSeconds;
-                        }
-                        
+                        //}
+
 
                         // 跨班次段的计算, 从DT开始的班次的以下个班次到 结束的上一个班次
                         for (int i = startIndex + 1; i < endIndex; i++)
                         {
                             dtMinList[i] += totalTimeSpan[i];
                         }
+                    }
+                }
+                else if (endIndex == -1 && startIndex > -1) {
+                    // 在同一时间段
+                    DateTime[] startTS = timeSpan[startIndex];
+                    dtMinList[startIndex] += startDT < startTS[0] ? totalTimeSpan[startIndex] : (startTS[1] - startDT).TotalSeconds;
+                    // 跨班次段的计算, 从DT开始的班次的以下个班次到 结束的上一个班次
+                    for (int i = startIndex + 1; i < countTS; i++)
+                    {
+                        dtMinList[i] += totalTimeSpan[i];
                     }
                 }
 
@@ -536,7 +547,7 @@ namespace DisplayBoard
             DateTime now = DateTime.Now;
 
             //// 测试用start
-            //DateTime now = DateTime.Parse("2019-07-19 16:43:21");
+            //DateTime now = DateTime.Parse("2019-07-19 14:43:21");
 
             List<DateTime[]> timeSpan = new List<DateTime[]>();
 
@@ -574,6 +585,9 @@ namespace DisplayBoard
                     string[] times = nowShifList[i].Split(',');
                     DateTime start = Convert.ToDateTime(times[0]);
                     DateTime end = Convert.ToDateTime(times[1]);
+                    //// 测试用start
+                    //DateTime start = DateTime.Parse("2019-07-19 " + times[0].ToString());
+                    //DateTime end = DateTime.Parse("2019-07-19 " + times[1].ToString());
                     timeSpanTmp.Add(new DateTime[2] { start, end });
 
                     // 和一个班次的开始时间做比较， 如果大于下一个班次的时间就算前一天的
@@ -652,7 +666,8 @@ namespace DisplayBoard
             List<DateTime> rangeDate = new List<DateTime>();
 
             string startStr = nowShifList[0].Split(',')[0];
-            string endStr = nowShifList[nowShifList.Count - 1].Split(',')[0];
+            //string endStr = nowShifList[nowShifList.Count - 1].Split(',')[0];
+            string endStr = nowShifList[nowShifList.Count - 1].Split(',')[1];
 
             DateTime start = dayOrNight ? Convert.ToDateTime(startStr) : Convert.ToDateTime(startStr).AddDays(-1);
             DateTime end = Convert.ToDateTime(endStr);
