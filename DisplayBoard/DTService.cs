@@ -401,7 +401,7 @@ namespace DisplayBoard
                         }
                     }
                 }
-                else if (endIndex == -1 && startIndex > -1) {
+                else if (startIndex > -1 && endIndex == -1) {
                     // 在同一时间段
                     DateTime[] startTS = timeSpan[startIndex];
                     dtMinList[startIndex] += startDT < startTS[0] ? totalTimeSpan[startIndex] : (startTS[1] - startDT).TotalSeconds;
@@ -545,11 +545,10 @@ namespace DisplayBoard
         {
             int length = nowShifList.Count;
             DateTime now = DateTime.Now;
+            List<DateTime[]> timeSpan = new List<DateTime[]>();
 
             //// 测试用start
             //DateTime now = DateTime.Parse("2019-07-19 14:43:21");
-
-            List<DateTime[]> timeSpan = new List<DateTime[]>();
 
             if (dayOrNight)
             {
@@ -577,7 +576,11 @@ namespace DisplayBoard
             else
             {
                 int yesterdayIndex = -1;
+                bool isDaySpan = true;
                 List<DateTime[]> timeSpanTmp = new List<DateTime[]>();
+
+
+                if (now >= Convert.ToDateTime(nowShifList[0].Split(',')[0])) isDaySpan = false;
 
                 //1. 把所有的班次转化成DateTime
                 for (int i = 0; i < length; i++)
@@ -585,6 +588,7 @@ namespace DisplayBoard
                     string[] times = nowShifList[i].Split(',');
                     DateTime start = Convert.ToDateTime(times[0]);
                     DateTime end = Convert.ToDateTime(times[1]);
+
                     //// 测试用start
                     //DateTime start = DateTime.Parse("2019-07-19 " + times[0].ToString());
                     //DateTime end = DateTime.Parse("2019-07-19 " + times[1].ToString());
@@ -604,17 +608,38 @@ namespace DisplayBoard
                 }
 
                 // 2. 处理前一天的时间范围 -1
-                for (int i = 0; i <= yesterdayIndex; i++)
+                if (isDaySpan)
                 {
-                    DateTime start = timeSpanTmp[i][0];
-                    DateTime end = timeSpanTmp[i][1];
-                    timeSpanTmp[i][0] = start.AddDays(-1);
-
-                    // 防止最后一组昨天的班次的结束时间是00:00点之后 如： 【23：00，00：30】
-                    if (i != yesterdayIndex || start < end)
+                    for (int i = 0; i < yesterdayIndex; i++)
                     {
+                        DateTime start = timeSpanTmp[i][0];
+                        DateTime end = timeSpanTmp[i][1];
+                        timeSpanTmp[i][0] = start.AddDays(-1);
                         timeSpanTmp[i][1] = end.AddDays(-1);
                     }
+
+                    // 防止最后一组昨天的班次的结束时间是00:00点之后 如： 【23：00，00：30】
+                    if (timeSpanTmp[yesterdayIndex][0] > timeSpanTmp[yesterdayIndex][1])
+                    {
+                        timeSpanTmp[yesterdayIndex][0] = timeSpanTmp[yesterdayIndex][0].AddDays(-1);
+                    }
+                }
+                else
+                {
+                    for (int i = yesterdayIndex + 1; i < timeSpanTmp.Count; i++)
+                    {
+                        DateTime start = timeSpanTmp[i][0];
+                        DateTime end = timeSpanTmp[i][1];
+                        timeSpanTmp[i][0] = start.AddDays(1);
+                        timeSpanTmp[i][1] = end.AddDays(1);
+                    }
+
+                    // 防止最后一组昨天的班次的结束时间是00:00点之后 如： 【23：00，00：30】
+                    if (timeSpanTmp[yesterdayIndex][0] > timeSpanTmp[yesterdayIndex][1])
+                    {
+                        timeSpanTmp[yesterdayIndex][1] = timeSpanTmp[yesterdayIndex][1].AddDays(1);
+                    }
+
                 }
 
                 //3. 获取班次
@@ -637,6 +662,7 @@ namespace DisplayBoard
                 }
             }
 
+            
             return timeSpan;
         }
 
