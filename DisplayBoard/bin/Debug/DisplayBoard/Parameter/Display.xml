@@ -1,28 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <display>
   <database>
-    <!--<DB1>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_aoi_kk09;</DB1>-->
-    <!--<DB2>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_tst_kk09;</DB2>-->
-
-
+    <DB1>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_aoi_kk08;</DB1>
     <!--TPC：修改数据库连接-->
-    <!--<DB1>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_aoi_kk08;</DB1>-->
-    <DB1>Server=10.107.171.101;Port=5432;User id=postgres;password=postgres;Database=pqm_aoi_kk07;</DB1>
+    <!--<DB1>Server=10.107.171.101;Port=5432;User id=postgres;password=postgres;Database=pqm_aoi_kk07;</DB1>-->
     <!--END-TPC：修改数据库连接-->
     <DB2>Server=10.10.100.137;Port=5432;User id=pqm;password=dbuser;Database=pqm_tst_kk08;</DB2>
-
+    <!--<line>L01,L02,L03,L04,L05,L06,L07,L08,L09,L10</line>-->
+    <line>L03,L04,L05,L06,L07,L08,L09,L10</line>
   </database>
   <flash>600</flash>
   <!--TPC：add url link-->
-  <url>http://10.107.171.57:8000/get_status_data_api</url>
+  <urlkk09>http://172.27.32.30:8400/get_status_data_api</urlkk09>
+  <urlkk08>http://172.27.32.30:8300/get_status_data_api</urlkk08>
   <!--TPC：add url link-->
   <form font="Arial black" backColor="#4169E1"></form>
   <!--标题-->
   <title size="20" foreColor="#FFFFFF" location="400,10">Production Efficiency Kanban</title>
   <!--线别组别-->
-  <lineNo size="10" location="20,90">
-    <lineNoValue  size="18" foreColor="#FFFFFF" location="100,80" database="L03">Tub</lineNoValue>
-  </lineNo>
+  <lineNo size="10" location="20,90"></lineNo>
   <!--目标产量-->
   <target size="10" location="20,120"></target>
   <!--dgvTarget-->
@@ -33,7 +29,7 @@
       <Cover_Assy input="AE-1" output="CNTRS" process="AE-81,AE-16_01CJ,AE-3,AE-2,AE-40,C-COSM,AE-16_38CF,AE-16_01CJ2">10,1272,3.86%,0.47%,2.00%,92.00%,99.5%</Cover_Assy>
       <Base_Shield input="AE-16_36BS" output="AE-46" process="AE-45,B-COSM">3,2647,1.46%,0.00%,1.00%,92.00%,99.2%</Base_Shield>
       <Internal_Flex_Attach input="AE-4" output="AE-4" process="AE-16_39BF">1,1259,0%,0%,0%,0%,0%</Internal_Flex_Attach>
-      <Base_Assey input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM,AE-16_39BF,AE-16_02BJ2">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assey>
+      <Base_Assy input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM,AE-16_39BF,AE-16_02BJ2">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assy>
       <Magnet-Plate input="AE-30" output="AE-30" process="CA1-COSM,AE-16_18LD,AE-16_18TR,AE-16_18MP">3,2687,6.96%,0.37%,0.75%,92.00%,99.0%</Magnet-Plate>
       <Magnet_Insert input="AE-16_19MA" output="AE-32" process="CA2-COSM,GNTRS,GOVEN">6,1314,4.84%,0.05%,0.00%,92.00%,99.0%</Magnet_Insert>
       <Inner_Mount input="AE-16_20JM" output="GOVEN2" process="AE-33,AE-49,CA3-COSM,GNTRS2">9,1314,6.84%,0.56%,0.00%,92.00%,99.0%</Inner_Mount>
@@ -62,7 +58,7 @@
       <Cover_Assy input="AE-1" output="CNTRS" process="AE-81,AE-16_01CJ,AE-3,AE-2,AE-40,C-COSM,AE-16_38CF">10,1272,3.86%,0.47%,2.00%,92.00%,99.5%</Cover_Assy>
       <Base_Shield input="AE-16_36BS" output="AE-46" process="AE-45,B-COSM">3,2647,1.46%,0.00%,1.00%,92.00%,99.2%</Base_Shield>
       <Internal_Flex_Attach input="AE-4" output="AE-4" process="AE-16_39BF">1,1259,0%,0%,0%,0%,0%</Internal_Flex_Attach>
-      <Base_Assey input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM,AE-16_39BF,AE-16_02BJ2">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assey>
+      <Base_Assy input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM,AE-16_39BF,AE-16_02BJ2">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assy>
       <Magnet-Plate input="AE-30" output="AE-30" process="CA1-COSM,AE-16_18LD,AE-16_18TR,AE-16_18MP">3,2687,6.96%,0.37%,0.75%,92.00%,99.0%</Magnet-Plate>
       <Magnet_Insert input="AE-16_19MA" output="AE-32" process="CA2-COSM,GNTRS,GOVEN">6,1314,4.84%,0.05%,0.00%,92.00%,99.0%</Magnet_Insert>
       <Inner_Mount input="AE-16_20JM" output="GOVEN2" process="AE-33,AE-49,CA3-COSM,GNTRS2">9,1314,6.84%,0.56%,0.00%,92.00%,99.0%</Inner_Mount>
@@ -91,7 +87,7 @@
       <Cover_Assy input="AE-1" output="CNTRS" process="AE-83,AE-16_01CJ,AE-3,AE-2,AE-40,C-COSM">10,1272,3.86%,0.47%,2.00%,92.00%,99.5%</Cover_Assy>
       <Base_Shield input="AE-16_36BS" output="AE-46" process="AE-45,B-COSM">3,2647,1.46%,0.00%,1.00%,92.00%,99.2%</Base_Shield>
       <Internal_Flex_Attach input="AE-4" output="AE-4" process="">1,1259,0%,0%,0%,0%,0%</Internal_Flex_Attach>
-      <Base_Assey input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assey>
+      <Base_Assy input="AE-4" output="BNTRS" process="AE-83,AE-16_02BJ,AE-6,AE-5,AE-41,B-COSM">11,1259,2.35%,2.00%,2.00%,92.00%,99.3%</Base_Assy>
       <Magnet-Plate input="AE-30" output="AE-30" process="CA1-COSM">3,2687,6.96%,0.37%,0.75%,92.00%,99.0%</Magnet-Plate>
       <Magnet_Insert input="AE-16_19MA" output="AE-32" process="CA2-COSM,GNTRS,GOVEN">6,1314,4.84%,0.05%,0.00%,92.00%,99.0%</Magnet_Insert>
       <Inner_Mount input="AE-16_20JM" output="GOVEN2" process="AE-33,AE-49,CA3-COSM,GNTRS2">9,1314,6.84%,0.56%,0.00%,92.00%,99.0%</Inner_Mount>
@@ -118,19 +114,22 @@
   </dgvTarget>
   <!--班次-->
   <dayShif>
-    <timeSpan1>8:00,9:00</timeSpan1>
-    <timeSpan2>9:00,10:00</timeSpan2>
-    <timeSpan3>10:00,11:00</timeSpan3>
-    <timeSpan4>11:00,12:00</timeSpan4>
-    <timeSpan5>12:00,13:00</timeSpan5>
-    <timeSpan6>13:00,14:00</timeSpan6>
-    <timeSpan7>14:00,15:00</timeSpan7>
-    <timeSpan8>15:00,16:00</timeSpan8>
-    <timeSpan9>16:00,17:00</timeSpan9>
-    <timeSpan10>17:00,18:00</timeSpan10>
+    <timeSpan1>7:30,8:00</timeSpan1>
+    <timeSpan2>8:00,9:00</timeSpan2>
+    <timeSpan3>9:00,10:00</timeSpan3>
+    <timeSpan4>10:00,11:00</timeSpan4>
+    <timeSpan5>11:00,12:00</timeSpan5>
+    <timeSpan6>12:00,13:00</timeSpan6>
+    <timeSpan7>13:00,14:00</timeSpan7>
+    <timeSpan8>14:00,15:00</timeSpan8>
+    <timeSpan9>15:00,16:00</timeSpan9>
+    <timeSpan10>16:00,17:00</timeSpan10>
+    <timeSpan11>17:00,18:00</timeSpan11>
+    <timeSpan12>18:00,19:00</timeSpan12>
+    <timeSpan13>19:00,20:30</timeSpan13>
   </dayShif>
   <nightShif>
-    <timeSpan1>20:00,21:00</timeSpan1>
+    <timeSpan1>20:30,21:00</timeSpan1>
     <timeSpan2>21:00,22:00</timeSpan2>
     <timeSpan3>22:00,23:00</timeSpan3>
     <timeSpan4>23:00,0:00</timeSpan4>

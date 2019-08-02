@@ -39,16 +39,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DisplayBoard));
             this.dtpShowTime = new System.Windows.Forms.DateTimePicker();
-            this.lblLineNoValue = new System.Windows.Forms.Label();
             this.lblTarget = new System.Windows.Forms.Label();
             this.tmrFlash = new System.Windows.Forms.Timer(this.components);
             this.btnSave = new System.Windows.Forms.Button();
             this.lblLineNoStr = new System.Windows.Forms.Label();
             this.dgvTitle = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblTitle = new System.Windows.Forms.Label();
             this.dgvTarget = new System.Windows.Forms.DataGridView();
             this.Items_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,6 +58,11 @@
             this.TotalEfficiency_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Yield_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvDisplay = new System.Windows.Forms.DataGridView();
+            this.cboInline = new System.Windows.Forms.ComboBox();
+            this.dtpDisplayTime = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cboLine = new System.Windows.Forms.ComboBox();
             this.Start_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.End_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.WorkingTime_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,10 +82,10 @@
             this.DTrate_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RetestRate_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OperatorLoss_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cboInline = new System.Windows.Forms.ComboBox();
-            this.dtpDisplayTime = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTarget)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDisplay)).BeginInit();
@@ -101,15 +101,6 @@
             this.dtpShowTime.Name = "dtpShowTime";
             this.dtpShowTime.Size = new System.Drawing.Size(156, 21);
             this.dtpShowTime.TabIndex = 0;
-            // 
-            // lblLineNoValue
-            // 
-            this.lblLineNoValue.AutoSize = true;
-            this.lblLineNoValue.Location = new System.Drawing.Point(100, 140);
-            this.lblLineNoValue.Name = "lblLineNoValue";
-            this.lblLineNoValue.Size = new System.Drawing.Size(59, 12);
-            this.lblLineNoValue.TabIndex = 2;
-            this.lblLineNoValue.Text = "(Line No)";
             // 
             // lblTarget
             // 
@@ -175,42 +166,6 @@
             this.dgvTitle.RowTemplate.Height = 23;
             this.dgvTitle.Size = new System.Drawing.Size(1104, 41);
             this.dgvTitle.TabIndex = 11;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Time section";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 120;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Plan";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column2.Width = 130;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Actual ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column3.Width = 605;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Efficiency Loss";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column4.Width = 397;
             // 
             // lblTitle
             // 
@@ -399,6 +354,57 @@
             this.dgvDisplay.Size = new System.Drawing.Size(1104, 438);
             this.dgvDisplay.TabIndex = 18;
             // 
+            // cboInline
+            // 
+            this.cboInline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboInline.FormattingEnabled = true;
+            this.cboInline.Location = new System.Drawing.Point(166, 91);
+            this.cboInline.Name = "cboInline";
+            this.cboInline.Size = new System.Drawing.Size(195, 20);
+            this.cboInline.TabIndex = 19;
+            this.cboInline.SelectedIndexChanged += new System.EventHandler(this.CboInline_SelectedIndexChanged);
+            // 
+            // dtpDisplayTime
+            // 
+            this.dtpDisplayTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpDisplayTime.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.dtpDisplayTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDisplayTime.Location = new System.Drawing.Point(777, 90);
+            this.dtpDisplayTime.Name = "dtpDisplayTime";
+            this.dtpDisplayTime.Size = new System.Drawing.Size(156, 21);
+            this.dtpDisplayTime.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(960, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 19);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "显示时间:";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(773, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 19);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "查询时间:";
+            // 
+            // cboLine
+            // 
+            this.cboLine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLine.FormattingEnabled = true;
+            this.cboLine.Location = new System.Drawing.Point(100, 91);
+            this.cboLine.Name = "cboLine";
+            this.cboLine.Size = new System.Drawing.Size(50, 20);
+            this.cboLine.TabIndex = 24;
+            // 
             // Start_2
             // 
             this.Start_2.HeaderText = "Start";
@@ -495,7 +501,7 @@
             this.NGQty_2.HeaderText = "NG Qty.(by M/C)";
             this.NGQty_2.Name = "NGQty_2";
             this.NGQty_2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.NGQty_2.Width = 70;
+            this.NGQty_2.Width = 58;
             // 
             // FirstPassYieldRate_2
             // 
@@ -509,76 +515,71 @@
             this.DT_2.HeaderText = "DT(Min)";
             this.DT_2.Name = "DT_2";
             this.DT_2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DT_2.Width = 50;
+            this.DT_2.Width = 60;
             // 
             // DTrate_2
             // 
             this.DTrate_2.HeaderText = "DT%";
             this.DTrate_2.Name = "DTrate_2";
             this.DTrate_2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DTrate_2.Width = 69;
+            this.DTrate_2.Width = 70;
             // 
             // RetestRate_2
             // 
             this.RetestRate_2.HeaderText = "Retest Rate(1+2nd time)";
             this.RetestRate_2.Name = "RetestRate_2";
             this.RetestRate_2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.RetestRate_2.Width = 69;
+            this.RetestRate_2.Width = 70;
             // 
             // OperatorLoss_2
             // 
             this.OperatorLoss_2.HeaderText = "Operation Loss";
             this.OperatorLoss_2.Name = "OperatorLoss_2";
             this.OperatorLoss_2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.OperatorLoss_2.Width = 69;
+            this.OperatorLoss_2.Width = 70;
             // 
-            // cboInline
+            // Column1
             // 
-            this.cboInline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboInline.FormattingEnabled = true;
-            this.cboInline.Location = new System.Drawing.Point(20, 50);
-            this.cboInline.Name = "cboInline";
-            this.cboInline.Size = new System.Drawing.Size(195, 20);
-            this.cboInline.TabIndex = 19;
-            this.cboInline.SelectedIndexChanged += new System.EventHandler(this.CboInline_SelectedIndexChanged);
+            this.Column1.HeaderText = "Time section";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 120;
             // 
-            // dtpDisplayTime
+            // Column2
             // 
-            this.dtpDisplayTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpDisplayTime.CustomFormat = "yyyy/MM/dd HH:mm:ss";
-            this.dtpDisplayTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDisplayTime.Location = new System.Drawing.Point(777, 90);
-            this.dtpDisplayTime.Name = "dtpDisplayTime";
-            this.dtpDisplayTime.Size = new System.Drawing.Size(156, 21);
-            this.dtpDisplayTime.TabIndex = 0;
+            this.Column2.HeaderText = "Plan";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Width = 130;
             // 
-            // label1
+            // Column3
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(960, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 19);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "显示时间:";
+            this.Column3.HeaderText = "Actual ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 605;
             // 
-            // label2
+            // Column4
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(773, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 19);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "查询时间:";
+            this.Column4.HeaderText = "Efficiency Loss";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 398;
             // 
             // DisplayBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1128, 701);
+            this.Controls.Add(this.cboLine);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboInline);
@@ -588,7 +589,6 @@
             this.Controls.Add(this.dgvTitle);
             this.Controls.Add(this.lblLineNoStr);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.lblLineNoValue);
             this.Controls.Add(this.lblTarget);
             this.Controls.Add(this.dtpDisplayTime);
             this.Controls.Add(this.dtpShowTime);
@@ -609,7 +609,6 @@
         #endregion
 
         private System.Windows.Forms.DateTimePicker dtpShowTime;
-        private System.Windows.Forms.Label lblLineNoValue;
         private System.Windows.Forms.Label lblTarget;
         private System.Windows.Forms.Timer tmrFlash;
         private System.Windows.Forms.Button btnSave;
@@ -630,6 +629,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OpteraterEfficiency_1;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalEfficiency_1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Yield_1;
+        private System.Windows.Forms.DateTimePicker dtpDisplayTime;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cboLine;
         private System.Windows.Forms.DataGridViewTextBoxColumn Start_2;
         private System.Windows.Forms.DataGridViewTextBoxColumn End_2;
         private System.Windows.Forms.DataGridViewTextBoxColumn WorkingTime_2;
@@ -653,9 +656,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DateTimePicker dtpDisplayTime;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
     }
 }
 

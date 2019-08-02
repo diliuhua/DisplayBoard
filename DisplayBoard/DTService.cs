@@ -15,6 +15,9 @@ namespace DisplayBoard
 {
     class DTService
     {
+        public static double DT_sec;
+        public static double DT_sum;
+
         /// <summary>
         /// 获取DT的百分比和分钟数
         /// </summary>
@@ -25,15 +28,20 @@ namespace DisplayBoard
         /// <param name="dayOrNight"></param>
         /// <param name="nowShifList"></param>
         /// <returns></returns>
-        public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList, string assy)
+        public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList, string assy, DateTime selectDateTime)
         {
-            List<DateTime[]> timeSpan = ConvertTimeSpan(dayOrNight, nowShifList); // 获取格式化后的DateTime  
+            List<DateTime[]> timeSpan = ConvertTimeSpan(dayOrNight, nowShifList, selectDateTime); // 获取格式化后的DateTime  
             if (timeSpan.Count == 0) return null;
-            //string a = cboInline.Text;
-            List<DateTime> rangeDate = GetRangeDate(dayOrNight, nowShifList); // 查询班次的范围
+
+            //List<DateTime> rangeDate = GetRangeDate(dayOrNight, nowShifList, selectDateTime); // 查询班次的范围
+            List<DateTime> rangeDate = new List<DateTime>();
+            rangeDate.Add(timeSpan[0][0]);
+            rangeDate.Add(timeSpan[timeSpan.Count - 1][1]);
+
             //DataTable dt = QueryDT(inputName, outputName, process_cd, DBline, rangeDate, assy); // 获取数据
             //Dictionary<string, List<DtData>> dictProcDt = GetDtDataByProc(dt); // 获取分组的Proc的DT
             //List<DtData> dtDataList = GetDtDataAll(dictProcDt, timeSpan); // 对重复时间进行整合后的DT
+            //assy = "TUB";//"Cover_Shield";//"Final";
             List<DtData> dtDataList = GetDtData(DBline, rangeDate, assy);
             List<double[]> dtData = ComputeDT(dtDataList, timeSpan); // 计算
             return dtData;
@@ -114,7 +122,8 @@ namespace DisplayBoard
                 dt.Columns.Add("process_at");
                 dt.Columns.Add("judge_text");
                 dt.Columns.Add("rid");
-                foreach (SummaryDataModel item in resObj.data) {
+                foreach (SummaryDataModel item in resObj.data)
+                {
                     DataRow dr = dt.NewRow();
                     dr["line_cd"] = item.line_cd.ToString();
                     dr["assy_cd"] = item.assy_cd.ToString();
@@ -140,9 +149,22 @@ namespace DisplayBoard
             try
             {
                 XDocument XMLdoc = XDocument.Load(Application.StartupPath + @"\Parameter\Display.xml");
-                string url = XMLdoc.Descendants("url").FirstOrDefault().Value;
+                //string url = XMLdoc.Descendants("url").FirstOrDefault().Value;
+                string url = "";
+                switch (DBHelper.DBremark)
+                {
+                    case "kk09":
+                        url = XMLdoc.Descendants("urlkk09").FirstOrDefault().Value;
+                        break;
+                    case "kk08":
+                        url = XMLdoc.Descendants("urlkk08").FirstOrDefault().Value;
+                        break;
+                        //case "kk07":
+                        //    url = XMLdoc.Descendants("url").FirstOrDefault().Value;
+                        //    break;
+                }
                 string start_time = rangeDate[0].ToString("yyyy-MM-dd HH:mm:ss");
-                string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss"); 
+                string end_time = rangeDate[1].ToString("yyyy-MM-dd HH:mm:ss");
 
                 //// 测试用start
                 //string start_time = "2019-07-19 08:00:00";
@@ -167,13 +189,13 @@ namespace DisplayBoard
                 }
                 return dtDataRet;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string str = LogHelper.GetExceptionMsg(ex, "獲取API數據失敗！");
                 LogHelper.WriteErrorLog(str);
                 return dtDataRet;
             }
-            
+
         }
 
         /// <summary>
@@ -251,6 +273,11 @@ namespace DisplayBoard
                 streamReader = new StreamReader(httpWebResponse.GetResponseStream());
                 responseContent = streamReader.ReadToEnd();
 
+                return responseContent;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
                 return responseContent;
             }
             finally
@@ -390,7 +417,7 @@ namespace DisplayBoard
                         //}
                         //else
                         //{
-                            dtMinList[endIndex] += (endDT - endTS[0]).TotalSeconds;
+                        dtMinList[endIndex] += (endDT - endTS[0]).TotalSeconds;
                         //}
 
 
@@ -401,7 +428,8 @@ namespace DisplayBoard
                         }
                     }
                 }
-                else if (startIndex > -1 && endIndex == -1) {
+                else if (startIndex > -1 && endIndex == -1)
+                {
                     // 在同一时间段
                     DateTime[] startTS = timeSpan[startIndex];
                     dtMinList[startIndex] += startDT < startTS[0] ? totalTimeSpan[startIndex] : (startTS[1] - startDT).TotalSeconds;
@@ -418,11 +446,18 @@ namespace DisplayBoard
             }
 
             // 计算百分比
+            DT_sec = new double();
+            DT_sum = new double();
             List<double[]> retDt = new List<double[]>();
             for (int i = 0; i < countTS; i++)
             {
-                double min= Math.Round(dtMinList[i] / 60, 2);
-                double per = Math.Round(dtMinList[i] / totalTimeSpan[i], 4) * 100;
+                //double min = Math.Round(dtMinList[i] / 60, 2);
+                //double per = Math.Round(dtMinList[i] / totalTimeSpan[i], 4) * 100;
+                
+                double min = Math.Round(dtMinList[i] / 60, 1);
+                DT_sec += dtMinList[i];
+                double per = Math.Round(dtMinList[i] / totalTimeSpan[i] * 100, 1) ;
+                DT_sum += totalTimeSpan[i];
                 retDt.Add(new double[2] { min, per });
             }
 
@@ -457,7 +492,7 @@ namespace DisplayBoard
                 if (isRun && judge_text == 1)
                 {
                     DateTime start = Convert.ToDateTime(row["process_at"].ToString());
-                    dictProcDt[row["proc_uuid"].ToString()].Add(new DtData { start = start});
+                    dictProcDt[row["proc_uuid"].ToString()].Add(new DtData { start = start });
                     isRun = false;
                     continue;
                 }
@@ -541,10 +576,12 @@ namespace DisplayBoard
         /// <param name="dayOrNight"></param>
         /// <param name="nowShifList"></param>
         /// <returns></returns>
-        private List<DateTime[]> ConvertTimeSpan(bool dayOrNight, List<string> nowShifList)
+        private List<DateTime[]> ConvertTimeSpan(bool dayOrNight, List<string> nowShifList, DateTime selectDateTime)
         {
             int length = nowShifList.Count;
-            DateTime now = DateTime.Now;
+            //DateTime now = DateTime.Now;
+            DateTime now = selectDateTime;
+            string nowDateStr = selectDateTime.ToString("yyyy/MM/dd ");
             List<DateTime[]> timeSpan = new List<DateTime[]>();
 
             //// 测试用start
@@ -555,8 +592,8 @@ namespace DisplayBoard
                 for (int i = 0; i < length; i++)
                 {
                     string[] times = nowShifList[i].Split(',');
-                    DateTime start = Convert.ToDateTime(times[0]);
-                    DateTime end = Convert.ToDateTime(times[1]);
+                    DateTime start = Convert.ToDateTime(nowDateStr + times[0]);
+                    DateTime end = Convert.ToDateTime(nowDateStr + times[1]);
 
                     //// 测试用start
                     //DateTime start = DateTime.Parse("2019-07-19 " + times[0].ToString());
@@ -577,17 +614,19 @@ namespace DisplayBoard
             {
                 int yesterdayIndex = -1;
                 bool isDaySpan = true;
+                
                 List<DateTime[]> timeSpanTmp = new List<DateTime[]>();
 
 
-                if (now >= Convert.ToDateTime(nowShifList[0].Split(',')[0])) isDaySpan = false;
+                if (now >= Convert.ToDateTime(nowDateStr+nowShifList[0].Split(',')[0]))
+                    isDaySpan = false;
 
                 //1. 把所有的班次转化成DateTime
                 for (int i = 0; i < length; i++)
                 {
                     string[] times = nowShifList[i].Split(',');
-                    DateTime start = Convert.ToDateTime(times[0]);
-                    DateTime end = Convert.ToDateTime(times[1]);
+                    DateTime start = Convert.ToDateTime(nowDateStr + times[0]);
+                    DateTime end = Convert.ToDateTime(nowDateStr + times[1]);
 
                     //// 测试用start
                     //DateTime start = DateTime.Parse("2019-07-19 " + times[0].ToString());
@@ -596,10 +635,10 @@ namespace DisplayBoard
 
                     // 和一个班次的开始时间做比较， 如果大于下一个班次的时间就算前一天的
                     // 记录下所在的位置
-                    if (yesterdayIndex < 0 && i+1 < length)
+                    if (yesterdayIndex < 0 && i + 1 < length)
                     {
                         string[] timesNext = nowShifList[i + 1].Split(',');
-                        DateTime startNext = Convert.ToDateTime(timesNext[0]);
+                        DateTime startNext = Convert.ToDateTime(nowDateStr + timesNext[0]);
                         if (startNext < start)
                         {
                             yesterdayIndex = i;
@@ -645,7 +684,7 @@ namespace DisplayBoard
                 //3. 获取班次
                 for (int i = 0; i < length; i++)
                 {
-                    
+
                     DateTime start = timeSpanTmp[i][0];
                     DateTime end = timeSpanTmp[i][1];
 
@@ -662,7 +701,7 @@ namespace DisplayBoard
                 }
             }
 
-            
+
             return timeSpan;
         }
 
@@ -687,7 +726,7 @@ namespace DisplayBoard
         /// <param name="dayOrNight"></param>
         /// <param name="nowShifList"></param>
         /// <returns>【start, end】</returns>
-        private List<DateTime> GetRangeDate(bool dayOrNight, List<string> nowShifList)
+        private List<DateTime> GetRangeDate(bool dayOrNight, List<string> nowShifList, DateTime selectDateTime)
         {
             List<DateTime> rangeDate = new List<DateTime>();
 

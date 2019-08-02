@@ -16,7 +16,11 @@ namespace DisplayBoard
     {        
         static XDocument XMLdoc = XDocument.Load(Application.StartupPath + @"\Parameter\Display.xml");
         string fontStr = XMLdoc.Descendants("form").FirstOrDefault().Attribute("font").Value;
-        string DBline= XMLdoc.Descendants("lineNo").Descendants("lineNoValue").FirstOrDefault().Attribute("database").Value;//数据库的线别（查询数据时用到）
+        //string DBline= XMLdoc.Descendants("lineNo").Descendants("lineNoValue").FirstOrDefault().Attribute("database").Value;//数据库的线别（查询数据时用到）
+        string DBline
+        {
+            get { return cboLine.Text; }
+        }
         string inputName; //input名字
         string outputName;//output名字
         List<string> dayShif = new List<string>();//白班字符串列表
@@ -64,25 +68,20 @@ namespace DisplayBoard
             lblTitle.ForeColor = ColorTranslator.FromHtml(varStr);
             var varIntArr = Array.ConvertAll(XMLdoc.Descendants("title").FirstOrDefault().Attribute("location").Value.Split(','), int.Parse);
             lblTitle.Location = new Point(varIntArr[0], varIntArr[1]);
-            //下拉框
+            //工序下拉框
             //string[] name = { "Cover Shield", "External Flex Attach", "Cover Assy", "Base Shield", "Internal Flex Attach", "Base Assey", "Magnet-Plate", "Magnet Insert", "Inner Mount", "L-Frame", "L-Bumper", "Tub Welding", "Cage Bumper", "CLD Attach", "Inner Parts Loading/Welding", "Inner Flexure Glue", "Docking", "SoftStop", "Base Welding", "Tab(E&W) welding", "Hotbar+Insulation Tape", "Tab(S) Welding", "Pre-bend+Label", "VMT", "TRAP4", "Final", "OK2SHIP" };
             IEnumerable<XElement> names = XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Elements();//.FirstOrDefault();            
             foreach (var var in names)
             { cboInline.Items.Add(var.Name.LocalName.Replace("_", " ")); }
+            //cboLine
+            string[] line = XMLdoc.Descendants("database").Descendants("line").FirstOrDefault().Value.Split(',');
+            cboLine.Items.AddRange(line);
+            cboLine.SelectedIndex = 0;
             //线别组别
             varInt = Convert.ToInt16(XMLdoc.Descendants("lineNo").FirstOrDefault().Attribute("size").Value);
             lblLineNoStr.Font = new Font(fontStr, varInt);
             varIntArr = Array.ConvertAll(XMLdoc.Descendants("lineNo").FirstOrDefault().Attribute("location").Value.Split(','), int.Parse);
-            lblLineNoStr.Location = new Point(varIntArr[0], varIntArr[1]);
-            //线别组别的值
-            varStr = XMLdoc.Descendants("lineNo").Descendants("lineNoValue").FirstOrDefault().Value;
-            lblLineNoValue.Text = DBline + "-" + varStr;
-            varInt = Convert.ToInt16(XMLdoc.Descendants("lineNo").Descendants("lineNoValue").FirstOrDefault().Attribute("size").Value);
-            lblLineNoValue.Font = new Font(fontStr, varInt);
-            varStr = XMLdoc.Descendants("lineNo").Descendants("lineNoValue").FirstOrDefault().Attribute("foreColor").Value;
-            lblLineNoValue.ForeColor = ColorTranslator.FromHtml(varStr);
-            varIntArr = Array.ConvertAll(XMLdoc.Descendants("lineNo").Descendants("lineNoValue").FirstOrDefault().Attribute("location").Value.Split(','), int.Parse);
-            lblLineNoValue.Location = new Point(varIntArr[0], varIntArr[1]);
+            lblLineNoStr.Location = new Point(varIntArr[0], varIntArr[1]);            
             //预计目标
             varInt = Convert.ToInt16(XMLdoc.Descendants("target").FirstOrDefault().Attribute("size").Value);
             lblTarget.Font = new Font(fontStr, varInt);
@@ -199,17 +198,14 @@ namespace DisplayBoard
             }
             #endregion
 
-            cboInline.SelectedIndex = 0;
-            dgvDisplay.ClearSelection();            
+            cboInline.SelectedIndex = 0;            
+            BtnSave_Click(sender, e);
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            #region 显示
-            dgvTarget.ClearSelection();
-            dgvDisplay.ClearSelection();            
             dtpShowTime.Value = dtpNow;
-            #endregion
+            
             #region 恢复初始值
             retestCount = 0;
             inputCount = 0;
@@ -218,6 +214,12 @@ namespace DisplayBoard
             getShowShif();
             //重新布局，保存人数
             writeDGV_Config();
+
+
+
+            // TPC: 调用DT方法
+            writeDT(cboInline.Text, dtpNow);
+            // ENDTPC: 调用方法
 
             //显示DGV
             int writeRowCount = 0;
@@ -258,7 +260,7 @@ namespace DisplayBoard
                 }
                 if (writeRowCount==0)
                     startTimeShif = start;
-                if (start <= dtpNow)
+                if (start < dtpNow)
                 {
                     //在时间段内使用实际时间
                     if (dtpNow < end)
@@ -270,14 +272,14 @@ namespace DisplayBoard
                 }
                 else { break; }
             }
+            
             //表格"Total"的行
             writeDGV_Total();
             //表格异常数据上色
             paint();
-            // TPC: 调用DT方法
-            string assy = cboInline.Text;
-            writeDT(assy);
-            // ENDTPC: 调用方法
+
+            dgvTarget.ClearSelection();
+            dgvDisplay.ClearSelection();
         }
 
         private void TmrFlash_Tick(object sender, EventArgs e)
@@ -418,9 +420,11 @@ namespace DisplayBoard
             //InputQty_2(plan)
             var vardou = Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["WorkingTime_2"].Value) / 60
                    * Convert.ToDouble(dgvTarget.Rows[0].Cells["CTBUPH_1"].Value);
-            dgvDisplay.Rows[rowInt].Cells["InputQty_2"].Value = RoundUp(vardou, 0);            
+            dgvDisplay.Rows[rowInt].Cells["InputQty_2"].Value = RoundUp(vardou, 0);
             //Working Time_
-            dgvDisplay.Rows[rowInt].Cells["WorkingTime_"].Value = dgvDisplay.Rows[rowInt].Cells["WorkingTime_2"].Value;//计划时间-DT时间(暂缓开发)
+            vardou = Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["WorkingTime_2"].Value)
+                - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["DT_2"].Value);
+            dgvDisplay.Rows[rowInt].Cells["WorkingTime_"].Value = RoundUp(vardou, 2);
             //Input Qty.
             dgvDisplay.Rows[rowInt].Cells["InputQty_"].Value = dt.Rows[0][0];
             //Output Qty.
@@ -480,7 +484,7 @@ namespace DisplayBoard
             try
             {
                 vardou = 1 - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value.ToString().Replace("%", "")) / 100
-                    //- Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["DT_2"].Value.ToString().Replace("%", ""))/100
+                    - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["DTrate_2"].Value.ToString().Replace("%", ""))/100
                     - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["RetestRate_2"].Value.ToString().Replace("%", "")) / 100;
                 if (double.IsInfinity(vardou) || double.IsNaN(vardou))
                 { dgvDisplay.Rows[rowInt].Cells["OperatorLoss_2"].Value = "-"; }
@@ -495,17 +499,18 @@ namespace DisplayBoard
         /// </summary>
         void writeDGV_Total()
         {
-            double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0;
+            double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0, sum8 = 0;
             for (int i = 0; i < dgvDisplay.Rows.Count - 1; i++)
             {
                 sum1 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["WorkingTime_2"].Value);
                 sum2 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["InputQty_2"].Value);
                 sum3 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["HeadCount_2"].Value);
-                sum4 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["WorkingTime_"].Value);
+                sum4 += Convert.ToDouble(dgvDisplay.Rows[i].Cells["WorkingTime_"].Value);
                 sum5 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["InputQty_"].Value);
                 sum6 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["OutputQty_2"].Value);
 
                 sum7 += Convert.ToInt16(dgvDisplay.Rows[i].Cells["NGQty_2"].Value);
+                sum8+= Convert.ToDouble(dgvDisplay.Rows[i].Cells["DT_2"].Value);
             }
             int rowInt = dgvDisplay.Rows.Count - 1;
             dgvDisplay.Rows[rowInt].Cells["WorkingTime_2"].Value = sum1.ToString();
@@ -527,12 +532,16 @@ namespace DisplayBoard
             else
             { dgvDisplay.Rows[rowInt].Cells["InputUPH_2"].Value = RoundUp(vardou, 0); }
             //Input UPPH
-            vardou = Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["InputUPH_2"].Value)
-                / Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["HeadCount_2"].Value);
-            if (double.IsInfinity(vardou) || double.IsNaN(vardou))
-            { dgvDisplay.Rows[rowInt].Cells["InputUPPH_2"].Value = "-"; }
-            else
-            { dgvDisplay.Rows[rowInt].Cells["InputUPPH_2"].Value = RoundUp(vardou, 0); }
+            try
+            {
+                vardou = Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["InputUPH_2"].Value)
+                    / Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["HeadCount_2"].Value);
+                if (double.IsInfinity(vardou) || double.IsNaN(vardou))
+                { dgvDisplay.Rows[rowInt].Cells["InputUPPH_2"].Value = "-"; }
+                else
+                { dgvDisplay.Rows[rowInt].Cells["InputUPPH_2"].Value = RoundUp(vardou, 0); }
+            }
+            catch { dgvDisplay.Rows[rowInt].Cells["InputUPPH_2"].Value = "-"; }
             //Output UPH
             vardou = Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["OutputQty_2"].Value)
                 / Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["WorkingTime_2"].Value) * 60;
@@ -541,12 +550,16 @@ namespace DisplayBoard
             else
             { dgvDisplay.Rows[rowInt].Cells["OutputUPH_2"].Value = RoundUp(vardou, 0); }
             //Efficiency
-            vardou = (Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["InputUPH_2"].Value)
-                / Convert.ToDouble(dgvTarget.Rows[0].Cells["DesignUPH_1"].Value));
-            if (double.IsInfinity(vardou) || double.IsNaN(vardou))
-            { dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value = "-"; }
-            else
-            { dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value = RoundUp(vardou * 100, 1) + "%"; }
+            try
+            {
+                vardou = (Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["InputUPH_2"].Value)
+                    / Convert.ToDouble(dgvTarget.Rows[0].Cells["DesignUPH_1"].Value));
+                if (double.IsInfinity(vardou) || double.IsNaN(vardou))
+                { dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value = "-"; }
+                else
+                { dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value = RoundUp(vardou * 100, 1) + "%"; }
+            }
+            catch { dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value = "-"; }
             //NG Qty.
             dgvDisplay.Rows[rowInt].Cells["NGQty_2"].Value = sum7.ToString();
             //First Pass Yield Rate
@@ -557,6 +570,31 @@ namespace DisplayBoard
             { dgvDisplay.Rows[rowInt].Cells["FirstPassYieldRate_2"].Value = "-"; }
             else
             { dgvDisplay.Rows[rowInt].Cells["FirstPassYieldRate_2"].Value = RoundUp(vardou * 100, 1) + "%"; }
+            //DT_2
+            dgvDisplay.Rows[rowInt].Cells["DT_2"].Value = sum8.ToString();
+            //DTrate_2
+            //vardou = Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["DT_2"].Value)
+            //   / Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["WorkingTime_2"].Value)
+            //   *100;
+            vardou = DTService.DT_sec/ DTService.DT_sum*100;
+            if (double.IsInfinity(vardou) || double.IsNaN(vardou))
+            { dgvDisplay.Rows[rowInt].Cells["DTrate_2"].Value = "-"; }
+            else
+            {
+                if (RoundUp(vardou, 2) >= dtRef)
+                {
+                    dgvDisplay.Rows[rowInt].Cells["DTrate_2"].Style.ForeColor = Color.Red;
+                }
+                //直接取引用数值，减少偏差
+                //dgvDisplay.Rows[rowInt].Cells["DTrate_2"].Value = RoundUp(vardou , 2) + "%";
+                dgvDisplay.Rows[rowInt].Cells["DTrate_2"].Value = Math.Round(vardou, 1) + "%";
+            }
+
+
+
+
+
+
             //Retest rate(1 + 2nd time)
             //从SFC中收集各工站测试2次+3次的次数/Input数量（各工站的重测率之和）
             vardou = retestCount / Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["InputQty_"].Value);
@@ -568,7 +606,7 @@ namespace DisplayBoard
             try
             {
                 vardou = 1 - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["Efficiency_2"].Value.ToString().Replace("%", "")) / 100
-              //- Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["DT_2"].Value.ToString().Replace("%", ""))/100
+              - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["DTrate_2"].Value.ToString().Replace("%", ""))/100
               - Convert.ToDouble(dgvDisplay.Rows[rowInt].Cells["RetestRate_2"].Value.ToString().Replace("%", "")) / 100;
                 if (double.IsInfinity(vardou) || double.IsNaN(vardou))
                 { dgvDisplay.Rows[rowInt].Cells["OperatorLoss_2"].Value = "-"; }
@@ -692,6 +730,7 @@ namespace DisplayBoard
                     { dgvDisplay.Rows[i].Cells["FirstPassYieldRate_2"].Style.ForeColor = Color.White; }
                     else { dgvDisplay.Rows[i].Cells["FirstPassYieldRate_2"].Style.ForeColor = Color.Red; }
                 }
+
                 //RetestRate
                 try
                 {
@@ -735,9 +774,8 @@ namespace DisplayBoard
             inputName = var.Attribute("input").Value;
             outputName = var.Attribute("output").Value;
             process_cd = var.Attribute("process").Value.Split(',');
-            dtpDisplayTime.Value = DateTime.Now;
-            BtnSave_Click(sender, e);
-            lblLineNoValue.Text = lblLineNoValue.Text.Substring(0, 4) + cboInline.Text;
+            //dtpDisplayTime.Value = DateTime.Now;
+            //BtnSave_Click(sender, e);
         }
 
         #region 向上舍入
@@ -772,44 +810,24 @@ namespace DisplayBoard
         /// <summary>
         /// 写入DT数据
         /// </summary>
-        void writeDT(string assy)
+        void writeDT(string assy, DateTime selectDateTime)
         {
             try
             {
                 // 测试夜班
                 //List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, false, nightShif);
 
-                List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, dayOrNight, nowShifList, assy);
+                List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, dayOrNight, nowShifList, assy, selectDateTime);
 
-                if (dtData == null)
+                for (int i=0;i<dtData.Count ;i++)
                 {
-                    for (int i = 0; i < dgvDisplay.RowCount; i++)
+                    dgvDisplay.Rows[i].Cells["DT_2"].Value = dtData[i][0];
+                    dgvDisplay.Rows[i].Cells["DTrate_2"].Value = dtData[i][1].ToString() + "%";
+                                        
+                    if (dtData[i][1] >= dtRef)
                     {
-                        dgvDisplay.Rows[i].Cells["DT_2"].Value = "-";
-                        dgvDisplay.Rows[i].Cells["DTrate_2"].Value = "-";
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < dgvDisplay.RowCount; i++)
-                    {
-
-                        try
-                        {
-                            dgvDisplay.Rows[i].Cells["DT_2"].Value = dtData[i][0].ToString();
-                            dgvDisplay.Rows[i].Cells["DTrate_2"].Value = dtData[i][1].ToString() + "%";
-
-                            if (dtData[i][1] >= dtRef)
-                            {
-                                dgvDisplay.Rows[i].Cells["DT_2"].Style.ForeColor = Color.Red;
-                                dgvDisplay.Rows[i].Cells["DTrate_2"].Style.ForeColor = Color.Red;
-                            }
-                        }
-                        catch
-                        {
-                            dgvDisplay.Rows[i].Cells["DT_2"].Value = "-";
-                            dgvDisplay.Rows[i].Cells["DTrate_2"].Value = "-";
-                        }
+                        //dgvDisplay.Rows[i].Cells["DT_2"].Style.ForeColor = Color.Red;
+                        dgvDisplay.Rows[i].Cells["DTrate_2"].Style.ForeColor = Color.Red;
                     }
                 }
             }
