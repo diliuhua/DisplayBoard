@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DisplayBoard.exe" size="194528">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DisplayBoard.exe" size="195040">
       <assemblyIdentity name="DisplayBoard" version="1.0.729.1000" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ctFxoPsC66I1PUFvAp+kY/+X21MLJXXidWnCXGe+MJo=</dsig:DigestValue>
+        <dsig:DigestValue>2+DafDK4JMEIOmfLi45B6Y6+QRinA9Sd5yAdh178jQg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -63,6 +63,18 @@
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
         <dsig:DigestValue>r1YQxRXSJE25jGYmNiZMgXfomxr+QH+I/RikHWb25+I=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Mono.Security.dll" size="282624">
+      <assemblyIdentity name="Mono.Security" version="2.0.0.0" publicKeyToken="0738EB9F132ED756" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>v8M2R9bTJoC1NE9Wy23XG3NXQSdGAxBWqbWvoCeZyXc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -90,13 +102,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="DisplayBoard.exe.config" size="173">
+  <file name="DisplayBoard.exe.config" size="178">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Ft9o/LAFWwIF6d9ZFsWSEEXCO1IVICJKfmiIAUTf3P8=</dsig:DigestValue>
+      <dsig:DigestValue>8WVUCbxS/ZPAnR+A/SvJ+Zb7ImwQvMZv+LnSzoKnzsQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DisplayBoard.ico" size="67646">
@@ -108,13 +120,13 @@
       <dsig:DigestValue>K8Cls3pucxLxB4O8azrQ+xl0qQwsy+sSuorwc9qbEuU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Parameter\Display.xml" size="12796" writeableType="applicationData">
+  <file name="Parameter\Display.xml" size="18463" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>1MEvAnpwqZs4+dCYVuSZBwZcMJl7yKiEmg2a2MRdXy4=</dsig:DigestValue>
+      <dsig:DigestValue>r9E6s+/D33fj7P6lmItuihPciAmqKQMxIgz7frIbhFY=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -28,7 +28,7 @@ namespace DisplayBoard
         /// <param name="dayOrNight"></param>
         /// <param name="nowShifList"></param>
         /// <returns></returns>
-        public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList, string assy, DateTime selectDateTime)
+        public List<double[]> GetDTMin(string inputName, string outputName, string[] process_cd, string DBline, bool dayOrNight, List<string> nowShifList, string assy, string unit, DateTime selectDateTime)
         {
             List<DateTime[]> timeSpan = ConvertTimeSpan(dayOrNight, nowShifList, selectDateTime); // 获取格式化后的DateTime  
             if (timeSpan.Count == 0) return null;
@@ -42,7 +42,7 @@ namespace DisplayBoard
             //Dictionary<string, List<DtData>> dictProcDt = GetDtDataByProc(dt); // 获取分组的Proc的DT
             //List<DtData> dtDataList = GetDtDataAll(dictProcDt, timeSpan); // 对重复时间进行整合后的DT
             //assy = "TUB";//"Cover_Shield";//"Final";
-            List<DtData> dtDataList = GetDtData(DBline, rangeDate, assy);
+            List<DtData> dtDataList = GetDtData(DBline, rangeDate, assy ,unit);
             List<double[]> dtData = ComputeDT(dtDataList, timeSpan); // 计算
             return dtData;
         }
@@ -142,8 +142,9 @@ namespace DisplayBoard
         /// <param name="DBline"></param>
         /// <param name="rangeDate"></param>
         /// <param name="assy"></param>
+        /// <param name="unit"></param>
         /// <returns></returns>
-        private List<DtData> GetDtData(string DBline, List<DateTime> rangeDate, string assy)
+        private List<DtData> GetDtData(string DBline, List<DateTime> rangeDate, string assy, string unit)
         {
             List<DtData> dtDataRet = new List<DtData>();
             try
@@ -177,6 +178,7 @@ namespace DisplayBoard
                 {
                     line_cd = DBline,
                     assy_cd = assy,
+                    unit_cd = unit,
                     start = start_time,
                     end = end_time
                 };
@@ -316,6 +318,7 @@ namespace DisplayBoard
         {
             public string line_cd { get; set; }
             public string assy_cd { get; set; }
+            public string unit_cd { get; set; }            
             public string start { get; set; }
             public string end { get; set; }
         }

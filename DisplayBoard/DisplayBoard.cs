@@ -36,6 +36,7 @@ namespace DisplayBoard
         double dtRef = 0; // 百分比参考值固定
         DTService DT = new DTService();
         //ENDTPC: 引用DT计算类
+        Dictionary<string, string[]> dic = new Dictionary<string, string[]>();//assy和unit
 
         public DateTime dtpNow
         {
@@ -68,25 +69,25 @@ namespace DisplayBoard
             lblTitle.ForeColor = ColorTranslator.FromHtml(varStr);
             var varIntArr = Array.ConvertAll(XMLdoc.Descendants("title").FirstOrDefault().Attribute("location").Value.Split(','), int.Parse);
             lblTitle.Location = new Point(varIntArr[0], varIntArr[1]);
-            //工序下拉框
-            //string[] name = { "Cover Shield", "External Flex Attach", "Cover Assy", "Base Shield", "Internal Flex Attach", "Base Assey", "Magnet-Plate", "Magnet Insert", "Inner Mount", "L-Frame", "L-Bumper", "Tub Welding", "Cage Bumper", "CLD Attach", "Inner Parts Loading/Welding", "Inner Flexure Glue", "Docking", "SoftStop", "Base Welding", "Tab(E&W) welding", "Hotbar+Insulation Tape", "Tab(S) Welding", "Pre-bend+Label", "VMT", "TRAP4", "Final", "OK2SHIP" };
-            IEnumerable<XElement> names = XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Elements();//.FirstOrDefault();            
-            foreach (var var in names)
-            { cboInline.Items.Add(var.Name.LocalName.Replace("_", " ")); }
+            //工序下拉框            
+            //IEnumerable<XElement> names = XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Elements();//.FirstOrDefault();            
+            //foreach (var var in names)
+            //{ cboAssyAndUnit.Items.Add(var.Name.LocalName.Replace("_", " ")); }
+
+            IEnumerable<XElement> node = XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Elements();//.FirstOrDefault();
+            foreach (var var in node)
+            {
+                string name = var.Name.LocalName.Replace("_", " ");
+                string assy = var.Attribute("assy").Value;
+                string unit = var.Attribute("unit").Value;
+                cboAssyAndUnit.Items.Add(name);
+                dic.Add(name, new string[] { assy, unit });
+            }
+
             //cboLine
             string[] line = XMLdoc.Descendants("database").Descendants("line").FirstOrDefault().Value.Split(',');
             cboLine.Items.AddRange(line);
             cboLine.SelectedIndex = 0;
-            //线别组别
-            varInt = Convert.ToInt16(XMLdoc.Descendants("lineNo").FirstOrDefault().Attribute("size").Value);
-            lblLineNoStr.Font = new Font(fontStr, varInt);
-            varIntArr = Array.ConvertAll(XMLdoc.Descendants("lineNo").FirstOrDefault().Attribute("location").Value.Split(','), int.Parse);
-            lblLineNoStr.Location = new Point(varIntArr[0], varIntArr[1]);            
-            //预计目标
-            varInt = Convert.ToInt16(XMLdoc.Descendants("target").FirstOrDefault().Attribute("size").Value);
-            lblTarget.Font = new Font(fontStr, varInt);
-            varIntArr = Array.ConvertAll(XMLdoc.Descendants("target").FirstOrDefault().Attribute("location").Value.Split(','), int.Parse);
-            lblTarget.Location = new Point(varIntArr[0], varIntArr[1]);
             //预计目标的值
             int index = dgvTarget.Rows.Add();
             dgvTarget.Rows[index].Cells["Items_1"].Value = "Target";
@@ -96,11 +97,14 @@ namespace DisplayBoard
         }
 
         /// <summary>
-        /// 目标值填入dgv中
+        /// 目标值填入控件中
         /// </summary>
         void fillTarget()
         {
-            var var= XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Descendants(cboInline.Text.Replace(" ","_")).FirstOrDefault();
+            string dicKey = cboAssyAndUnit.Text;            
+            lblAssy.Text= dic[dicKey][0];
+            lblUnit.Text = dic[dicKey][1];
+            var var= XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Descendants(cboAssyAndUnit.Text.Replace(" ","_")).FirstOrDefault();
             string[] strArr = var.Value.Split(',');
             dgvTarget.Rows[0].Cells["HeadCount_1"].Value = strArr[0];
             dgvTarget.Rows[0].Cells["DesignUPH_1"].Value = strArr[1];
@@ -198,7 +202,7 @@ namespace DisplayBoard
             }
             #endregion
 
-            cboInline.SelectedIndex = 0;            
+            cboAssyAndUnit.SelectedIndex = 0;            
             BtnSave_Click(sender, e);
         }
 
@@ -218,7 +222,10 @@ namespace DisplayBoard
 
 
             // TPC: 调用DT方法
-            writeDT(cboInline.Text, dtpNow);
+            //writeDT(cboAssyAndUnit.Text, dtpNow);
+            string assy = lblAssy.Text;
+            string unit = lblUnit.Text;
+            writeDT(assy, unit, dtpNow);
             // ENDTPC: 调用方法
 
             //显示DGV
@@ -402,7 +409,7 @@ namespace DisplayBoard
             #endregion
 
             //测试工位，数据在另外的数据库
-            if (cboInline.Text == "VMT" || cboInline.Text == "TRAP4")
+            if (cboAssyAndUnit.Text == "VMT" || cboAssyAndUnit.Text == "TRAP4")
             {
                 new DBHelper().ExecuteDataTable(2, sql.ToString(), ref dt);
             }
@@ -770,7 +777,7 @@ namespace DisplayBoard
         private void CboInline_SelectedIndexChanged(object sender, EventArgs e)
         {
             fillTarget();
-            var var = XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Descendants(cboInline.Text.Replace(" ", "_")).FirstOrDefault();
+            var var = XMLdoc.Descendants("dgvTarget").Descendants(DBHelper.DBremark).Descendants(cboAssyAndUnit.Text.Replace(" ", "_")).FirstOrDefault();
             inputName = var.Attribute("input").Value;
             outputName = var.Attribute("output").Value;
             process_cd = var.Attribute("process").Value.Split(',');
@@ -810,14 +817,14 @@ namespace DisplayBoard
         /// <summary>
         /// 写入DT数据
         /// </summary>
-        void writeDT(string assy, DateTime selectDateTime)
+        void writeDT(string assy,string unit, DateTime selectDateTime)
         {
             try
             {
                 // 测试夜班
                 //List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, false, nightShif);
 
-                List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, dayOrNight, nowShifList, assy, selectDateTime);
+                List<double[]> dtData = DT.GetDTMin(inputName, outputName, process_cd, DBline, dayOrNight, nowShifList, assy, unit, selectDateTime);
 
                 for (int i=0;i<dtData.Count ;i++)
                 {
